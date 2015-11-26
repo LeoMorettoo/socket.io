@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Socket.IO Chat Example</title>
   <link rel="stylesheet" href="style.css">
+  <link href="http://cdn.staticfile.org/emoji/0.2.2/emoji.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
   <ul class="pages">
@@ -21,8 +22,27 @@
     </li>
   </ul>
 
+  <div class="emojstext">
+    <span class="emoji emoji1f46c" title="man and man holding hands"></span>
+    <span class="emoji emoji1f60e" title="smiling face with sunglasses"></span>
+  </div>
+
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/main.js"></script>
+  <script src="http://cdn.staticfile.org/jquery/2.1.0/jquery.min.js"></script>
+  <script src="http://cdn.staticfile.org/emoji/0.2.2/emoji.js"></script>
+
+  <script>
+$(function () {
+  $text = $('.emojstext');
+  html = $text.html().trim().replace(/\n/g, '<br/>');
+  html = jEmoji.softbankToUnified(html);
+  html = jEmoji.googleToUnified(html);
+  html = jEmoji.docomoToUnified(html);
+  html = jEmoji.kddiToUnified(html);
+  $text.html(jEmoji.unifiedToHTML(html));
+});
+</script>
 </body>
 </html>
