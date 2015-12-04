@@ -127,37 +127,6 @@ ul {
   color: gray;
 }
 
-.message {
-  position: relative;
-  padding-left: 20px;
-}
-  .message.options {
-    position: absolute;
-    cursor: pointer;
-    left: 0;
-  }
-  .message.options:before {
-    content: "\2236";
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 0;
-    margin: 0;
-    line-height: 25px;
-  }
-
-    .options-list {
-      display: none;
-      font-size: 12px;
-      background: #fff;
-      padding: 5px 10px;
-      border-radius: 5px;
-      border: 2px solid #cecece;
-    }
-      .options-list li {
-        margin: 0 0 5px;
-      }
-
 .username {
   float: left;
   font-weight: 700;

@@ -26,7 +26,6 @@ $(function() {
   var numMenssagem = 0;
   var $currentInput = $usernameInput.focus();
   
-
   var socket = io();
 
   window.onload = function() {
@@ -43,27 +42,29 @@ $(function() {
     log(message);
   }
 
-  function banirAluno (id) {
-    $.ajax({
-        url: 'http://ava.tenhoprovaamanha.local/chat-auloes/banir-aluno/'+id+'/'+room,
-        type: 'post',
-      })
-      .done(function(e) {
-        if (e == "1") {
-            finishChat(id);
-        };
-      });
-  }
-
-
   function getInformation (id,sala) {
     id_aluno = id;
     room = sala;
+    setUsername();
+    $.ajax({
+         url: 'http://ava.tenhoprovaamanha.local/chat-auloes/'+id_aluno+'/'+room,
+         type: 'post',
+         dataType: 'json',
+       })
+       .done(function(e) {
+       console.log(e);
+         setUsername(e);
+       });
+    
   }
 
   // Sets the client's username
-  function setUsername () {
+  function setUsername (name) {
+    if (typeof name === 'undefined') {
       username = cleanInput($usernameInput.val().trim()); 
+    }else {
+      username = name
+    };
     // If the username is valid
     if (username) {
       $loginPage.fadeOut();
@@ -78,8 +79,8 @@ $(function() {
 
   function deleteMessage (idMensagem) {
     $("li .message[idMensagem = '"+idMensagem+"']").remove();
-    socket.emit('delete message', idMensagem);
   }
+  
   // Sends a chat message
   function sendMessage () {
     ++numMenssagem;
@@ -123,14 +124,11 @@ $(function() {
       .css('color', getUsernameColor(data.username));
     var $messageBodyDiv = $('<span class="messageBody">')
       .text(data.message);
-    var $messageOptions = $('<span class="message options"/>');
-    var $messageOptionsLi = $('<ul class="message options-list"><li class="idMensagem" idMensagem="'+data.idMensagem+'">Remover Mensagem<li class="idUsuario" idUsuario="'+data.idUsuario+'">Remover Aluno</>');
-    $messageOptions = $messageOptions.append($messageOptionsLi);
     var typingClass = data.typing ? 'typing' : '';
     var $messageDiv = $('<li idMensagem="'+data.idMensagem+'" class="message"/>')
       .data('username', data.username)
       .addClass(typingClass)
-      .append($messageOptions,$usernameDiv, $messageBodyDiv);
+      .append($usernameDiv, $messageBodyDiv);
 
     addMessageElement($messageDiv, options);
 
@@ -225,14 +223,6 @@ $(function() {
     return COLORS[index];
   }
 
-  function finishChat (id) {
-    if (typeof id === 'undefined') {
-      socket.emit('disconnect student');
-    }else{
-      socket.emit('ban student', id);
-      };
-  }
-
   // Keyboard events
 
   $window.keydown(function (event) {
@@ -256,6 +246,7 @@ $(function() {
     updateTyping();
   });
 
+
   // Click events
 
   // Focus input when clicking anywhere on login page
@@ -266,24 +257,6 @@ $(function() {
   // Focus input when clicking on the message input's border
   $inputMessage.click(function () {
     $inputMessage.focus();
-  });
-
-  //finish the chat reload on clients page 
-  $('.finalizaChat').on('click',function(event) {
-    event.preventDefault();
-    finishChat();
-  });
-
-  $(".messages").on('click','span.options',function(){
-    $(this).children('.options-list').toggle("fast");
-  });
-
-  $(".messages").on('click','li.idMensagem',function(){
-    deleteMessage($(this).attr('idMensagem'));
-  });
-  $(".messages").on('click','li.idUsuario',function(){
-    //banirAluno($(this).attr('idUsuario'));
-    finishChat($(this).attr('idUsuario'));
   });
 
   // Socket events
@@ -342,5 +315,10 @@ $(function() {
   // Whenever the server emits 'stop typing', kill the typing message
   socket.on('stop typing', function (data) {
     removeChatTyping(data);
+  });
+  
+  socket.on('delete message', function (idMensagem) {
+    console.log ('voltou');
+    deleteMessage(idMensagem);
   });
 });

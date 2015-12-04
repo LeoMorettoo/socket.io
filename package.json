@@ -21,12 +21,13 @@
     "test": "mocha --reporter dot --slow 200ms --bail"
   },
   "dependencies": {
+    "debug": "2.2.0",
     "engine.io": "automattic/engine.io#master",
-    "socket.io-parser": "2.2.5",
-    "socket.io-client": "automattic/socket.io-client#master",
-    "socket.io-adapter": "automattic/socket.io-adapter#master",
     "has-binary": "0.1.7",
-    "debug": "2.2.0"
+    "jsonfile": "^2.2.3",
+    "socket.io-adapter": "automattic/socket.io-adapter#master",
+    "socket.io-client": "automattic/socket.io-client#master",
+    "socket.io-parser": "2.2.5"
   },
   "devDependencies": {
     "expect.js": "0.3.1",
