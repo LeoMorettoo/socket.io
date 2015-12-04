@@ -29,7 +29,7 @@ app.get('/aluno/:projeto/:aluno/:room', function(req, res) {
 
 app.get('/adm/:projeto/:usuario/:room', function(req, res) {
   room = req.params.room;
-  usuario = req.params.usuario;
+ id_aluno = req.params.usuario;
   projeto = req.params.projeto;
   tipo = 'professor';
   res.redirect('/');
