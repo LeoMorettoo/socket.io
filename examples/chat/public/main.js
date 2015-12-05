@@ -43,9 +43,9 @@ $(function() {
     log(message);
   }
 
-  function banirAluno (id) {
+  function banirAluno (id,room) {
     $.ajax({
-        url: 'http://ava.tenhoprovaamanha.local/chat-auloes/banir-aluno/'+id+'/'+room,
+        url: url+'chat-auloes/banir-aluno/'+id+'/'+room,
         type: 'post',
       })
       .done(function(e) {
@@ -56,9 +56,10 @@ $(function() {
   }
 
 
-  function getInformation (id,sala) {
+  function getInformation (id,sala,url) {
     id_aluno = id;
     room = sala;
+    url_site = url;
   }
 
   // Sets the client's username
@@ -281,8 +282,9 @@ $(function() {
   $(".messages").on('click','li.idMensagem',function(){
     deleteMessage($(this).attr('idMensagem'));
   });
+
   $(".messages").on('click','li.idUsuario',function(){
-    //banirAluno($(this).attr('idUsuario'));
+    //banirAluno($(this).attr('idUsuario'),room);
     finishChat($(this).attr('idUsuario'));
   });
 

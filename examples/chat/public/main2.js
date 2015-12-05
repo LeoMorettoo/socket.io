@@ -42,11 +42,12 @@ $(function() {
     log(message);
   }
 
-  function getInformation (id,sala) {
+  function getInformation (id,sala,url) {
     id_aluno = id;
     room = sala;
+    url_site = url;
     $.ajax({
-         url: 'http://ava.tenhoprovaamanha.local/chat-auloes/'+id_aluno+'/'+room,
+         url: url+'chat-auloes/'+id_aluno+'/'+room,
          type: 'post',
          dataType: 'json',
        })
@@ -295,7 +296,7 @@ $(function() {
   });
 
   socket.on('get session', function (data) {
-    getInformation(data.id_aluno,data.room);
+    getInformation(data.id_aluno,data.room,data.url);
   });
   socket.on('', function (data) {
     addChatTyping(data);

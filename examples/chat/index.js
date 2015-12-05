@@ -11,6 +11,7 @@ var id_aluno;
 var room;
 var projeto;
 var tipo;
+var url_site = 'ava.tenhoprovaamanha.com.br/';
 
 server.listen(port, function () {
    console.log('Server listening at port %d', port);
@@ -29,7 +30,7 @@ app.get('/aluno/:projeto/:aluno/:room', function(req, res) {
 
 app.get('/adm/:projeto/:usuario/:room', function(req, res) {
   room = req.params.room;
- id_aluno = req.params.usuario;
+  id_aluno = req.params.usuario;
   projeto = req.params.projeto;
   tipo = 'professor';
   res.redirect('/');
@@ -68,7 +69,8 @@ io.on('connection', function (socket) {
     socket.join(room);
     io.to(socket.id).emit('get session', {
       id_aluno: id_aluno,
-      room: room
+      room: room,
+      url_site: url_site
     });
   });
 
