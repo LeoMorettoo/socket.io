@@ -47,7 +47,7 @@ $(function() {
     room = sala;
     url_site = url;
     $.ajax({
-         url: url+'chat-auloes/'+id_aluno+'/'+room,
+         url: url_site + '/chat-auloes/'+id_aluno+'/'+room,
          type: 'post',
          dataType: 'json',
        })
@@ -296,7 +296,7 @@ $(function() {
   });
 
   socket.on('get session', function (data) {
-    getInformation(data.id_aluno,data.room,data.url);
+    getInformation(data.id_aluno,data.room,data.url_site);
   });
   socket.on('', function (data) {
     addChatTyping(data);

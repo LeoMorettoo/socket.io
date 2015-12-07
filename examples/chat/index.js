@@ -1,5 +1,5 @@
 // Setup basic express server
-var express = require('express.io');
+var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('../..')(server);
@@ -11,11 +11,9 @@ var id_aluno;
 var room;
 var projeto;
 var tipo;
-var url_site = 'ava.tenhoprovaamanha.com.br/';
+var url_site = 'http://ava.tenhoprovaamanha.com.br';
 
-server.listen(port, function () {
-   console.log('Server listening at port %d', port);
-});
+server.listen(port,'www.chat.local');
 
 // Routing
 
