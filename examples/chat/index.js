@@ -13,9 +13,7 @@ var projeto;
 var tipo;
 var url_site = 'ava.tenhoprovaamanha.com.br/';
 
-server.listen(port, function () {
-   console.log('Server listening at port %d', port);
-});
+server.listen(process.env.PORT);
 
 // Routing
 
@@ -49,7 +47,7 @@ io.on('connection', function (socket) {
     file = projeto+"_"+socket.room+".json";
     //when the client emits 'new message', this save te message in a log
     var date = new Date();
-    var obj = {idMensagem: data.idMensagem,room: socket.room ,username: socket.username,idUsuario: socket.id_aluno,data_criacao: date,message: data.mensagem}
+    var obj = {idMensagem: data.idMensagem,room: socket.room ,username: socket.username,idUsuario: socket.id_aluno,tipo: socket.tipo,data_criacao: date,message: data.mensagem}
     obj = JSON.stringify(obj);
         fs.appendFile(file,obj, function() {
                 });
@@ -67,6 +65,7 @@ io.on('connection', function (socket) {
     socket.id_aluno = id_aluno;
     socket.room = room;
     socket.join(room);
+    socket.tipo = tipo;
     io.to(socket.id).emit('get session', {
       id_aluno: id_aluno,
       room: room,
@@ -75,7 +74,6 @@ io.on('connection', function (socket) {
   });
 
  socket.on('delete message', function (idMensagem){
-  console.log('entrou aqui server');
    socket.broadcast.to(socket.room).emit('delete message', idMensagem);
   });
 
@@ -112,13 +110,6 @@ io.on('connection', function (socket) {
       username: socket.username
     });
   });
-
-  //   var dateagr = Date.now();
-  //   var datareoload = 1448996679373;
-  // if (dateagr >= datareoload) {
-  //   console.log('hey');
-  //   io.sockets.emit('reload');
-  // };
 
   // when the user disconnects.. perform this
   socket.on('disconnect student', function () {

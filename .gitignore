@@ -7,5 +7,4 @@ lib-cov
 *.out
 *.pid
 benchmarks/*.png
-node_modules
 coverage
