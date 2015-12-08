@@ -11,9 +11,9 @@ var id_aluno;
 var room;
 var projeto;
 var tipo;
-var url_site = 'http://ava.tenhoprovaamanha.com.br';
+var url_site = 'http://ava2.tenhoprovaamanha.com.br';
 
-server.listen(port,'www.chat.local');
+server.listen(port,'chat.tenhoprovaamanha.com.br');
 
 // Routing
 

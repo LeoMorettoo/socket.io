@@ -20,6 +20,7 @@ $(function() {
   var username;
   var id_aluno;
   var room;
+  var url_site;
   var connected = false;
   var typing = false;
   var lastTypingTime;
@@ -45,10 +46,11 @@ $(function() {
 
   function banirAluno (id,room) {
     $.ajax({
-        url: url+'chat-auloes/banir-aluno/'+id+'/'+room,
-        type: 'post',
+        url: url_site + '/chat-auloes/banir-aluno/'+id+'/'+room,
+        type: 'get',
       })
       .done(function(e) {
+        console.log(e);
         if (e == "1") {
             finishChat(id);
         };
@@ -284,8 +286,8 @@ $(function() {
   });
 
   $(".messages").on('click','li.idUsuario',function(){
-    //banirAluno($(this).attr('idUsuario'),room);
-    finishChat($(this).attr('idUsuario'));
+    banirAluno($(this).attr('idUsuario'),room);
+    //finishChat($(this).attr('idUsuario'));
   });
 
   // Socket events
@@ -325,7 +327,7 @@ $(function() {
   });
 
   socket.on('get session', function (data) {
-    getInformation(data.id_aluno,data.room);
+    getInformation(data.id_aluno,data.room,data.url_site);
   });
   socket.on('', function (data) {
     addChatTyping(data);
